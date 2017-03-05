@@ -1,60 +1,49 @@
 let BlockColors = require('./BlockColors');
+let PieceLayouts = require('./PieceLayouts');
 
 module.exports = {
-    createJ
+    create,
+    Types: ['J', 'L', 'I', 'O', 'S', 'T', 'Z']
 };
 
-function createJ(y, x, rotation = 0) {
-    // xox
-    //   x
-    let row = y;
-    let col = x;
-    let currentRotate = rotation % 360;
+function create(options) {
+    let config = Object.assign({}, {
+        row: 5,
+        col: 5,
+        rotation: 0,
+        type: 'J'
+    }, options);
+
+    config.rotation %= 360;
+    let parts = generateParts(config.row, config.col, config.rotation, config.type);
 
     return {
-        origin() { return { row, col }; },
+        origin() { return { row: config.row, col: config.col }; },
+        color() { return BlockColors.LIGHTGRAY },
+        body() { return parts; },
         fall() {
-            return createJ(row + 1, col, currentRotate);
+            return create({
+                ...config,
+                row: config.row + 1
+            });
         },
         rotate() {
-            return createJ(row, col, currentRotate + 90);
+            return create({
+                ...config,
+                rotation: config.rotation + 90
+            });
         },
         setPosition(y, x) {
-            row = y;
-            col = x;
+            return create({
+                ...config,
+                row: y,
+                col: x
+            });
         },
-        color() { return BlockColors.LIGHTGRAY },
-        body() {
-
-            let parts = [
-                { row: row, col: col - 1 },
-                { row: row, col: col },
-                { row: row, col: col + 1 },
-                { row: row + 1, col: col + 1 },
-            ];
-
-            switch (currentRotate) {
-                case 90:
-                    parts[0].row--;
-                    parts[0].col++;
-                    parts[2].row++;
-                    parts[2].col--;
-                    parts[3].col = parts[3].col - 2;
-                    break;
-                case 180:
-                    parts[3].row = parts[3].row - 2;
-                    parts[3].col = parts[3].col - 2;
-                    break;
-                case 270:
-                    parts[0].row++;
-                    parts[0].col++;
-                    parts[2].row--;
-                    parts[2].col--;
-                    parts[3].row = parts[3].row - 2;
-                    break;
-            }
-
-            return parts;
-        }
     };
+}
+
+function generateParts(row, col, currentRotation, type) {
+    let parts = PieceLayouts[type](row, col);
+    return PieceLayouts['adjustRotation' + type](parts, currentRotation);
 }

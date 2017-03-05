@@ -5,7 +5,6 @@ module.exports = {
 		filename: 'bundle.js'
 	},
 	module: {
-
 		loaders: [
 			{
 				test: /\.tag$/,
@@ -18,6 +17,15 @@ module.exports = {
 			{
 				test: /\.css$/,
 				use: ['style-loader', 'css-loader']
+			},
+			{
+				test: /\.js$/,
+				loader: 'babel-loader',
+				exclude: /node_modules/,
+				query: {
+					presets: ['env'],
+					plugins: ["transform-object-rest-spread"]
+				}
 			}
 		],
 	}

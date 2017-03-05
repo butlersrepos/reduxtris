@@ -68,6 +68,10 @@ module.exports = function (state = initialState, action) {
 				currentPiece: rotatedPiece,
 				gameGrid: composeGrid(state.gameGrid, rotatedPiece)
 			});
+		case ActionTypes.SET_TICK_TIME:
+			return Object.assign({}, state, {
+				tickTimer: action.value
+			});
 		default:
 			return state;
 	}

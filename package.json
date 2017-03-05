@@ -10,9 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "colors.css": "~3.0.0",
+    "css-loader": "~0.26.2",
+    "node-sass": "~4.5.0",
+    "normalize.css": "~5.0.0",
     "redux": "^3.6.0",
     "riot": "^3.3.1",
     "riot-tag-loader": "^1.0.0",
+    "style-loader": "~0.13.2",
     "webpack": "^2.2.1"
   }
 }

@@ -15,12 +15,12 @@ function create(options) {
     }, options);
 
     config.rotation %= 360;
-    let parts = generateParts(config.row, config.col, config.rotation, config.type);
+    let shape = generateShape(config.row, config.col, config.rotation, config.type);
 
     return {
         origin() { return { row: config.row, col: config.col }; },
         color() { return BlockColors.LIGHTGRAY },
-        body() { return parts; },
+        body() { return shape.parts(); },
         fall() {
             return create({
                 ...config,
@@ -43,7 +43,12 @@ function create(options) {
     };
 }
 
-function generateParts(row, col, currentRotation, type) {
-    let parts = PieceLayouts[type](row, col);
-    return PieceLayouts['adjustRotation' + type](parts, currentRotation);
+function generateShape(row, col, rotation, type) {
+    let shape = PieceLayouts[type](row, col);
+	while( rotation > 0 ) {
+		shape.rotate();
+		rotation -= 90;
+	}
+	return shape;
 }
+

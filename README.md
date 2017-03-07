@@ -248,7 +248,7 @@ import './components/message-banner.tag';
 
 window.Store = createStore(reducerUltimus);
 
-// Could inject the Store but I'm just gonna refer to window.Store everywhere instead :)
+// Could inject the Store but I'm just gonna refer to `window.Store` everywhere instead :)
 riot.mount('*');
 
 Store.dispatch({

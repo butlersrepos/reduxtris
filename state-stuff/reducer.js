@@ -56,9 +56,14 @@ module.exports = function (state = initialState, action) {
 			if (!state.currentPiece) return state;
 			let currentPiece = state.currentPiece.fall();
 
+			let validGrid = false;
+			while(!validGrid) {
+				validGrid = composeGrid(state.gameGrid, currentPiece);
+			}
+
 			return Object.assign({}, state, {
 				currentPiece: currentPiece,
-				gameGrid: composeGrid(state.gameGrid, currentPiece)
+				gameGrid: validGrid
 			});
 		case ActionTypes.ROTATE_PIECE:
 			if (!state.currentPiece) return state;
@@ -84,5 +89,6 @@ function composeGrid(grid, piece) {
 		nextGrid[part.row][part.col] = piece.color();
 	});
 
+	// determine if grid is valid, if not return null
 	return nextGrid;
 }

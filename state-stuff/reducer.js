@@ -1,7 +1,9 @@
 let GameStates = require('../game-logic/GameStates');
+let GameConfig = require('../game-logic/GameConfig');
 let ActionTypes = require('./ActionTypes');
 let Piece = require('../game-logic/Piece');
 let CLEAR = require('../game-logic/BlockColors').CLEAR;
+
 
 let PIECE_START_ROW = 0;
 let PIECE_START_COL = 5;
@@ -17,11 +19,7 @@ let initialState = {
 };
 
 function generateBaseGrid(options) {
-	let config = Object.assign({
-		GRID_ROWS: 20,
-		GRID_COLUMNS: 10,
-		DEFAULT_GRID_SPACE: CLEAR
-	}, options);
+	let config = Object.assign({}, GameConfig, options);
 
 	let grid = [];
 
@@ -53,17 +51,19 @@ module.exports = function (state = initialState, action) {
 				gameGrid: composeGrid(state.gameGrid, piece)
 			});
 		case ActionTypes.TICK_GAME:
-			if (!state.currentPiece) return state;
-			let currentPiece = state.currentPiece.fall();
-
-			let validGrid = false;
-			while(!validGrid) {
-				validGrid = composeGrid(state.gameGrid, currentPiece);
+			if (!state.currentPiece) {
+				return state;
 			}
 
+			let newGrid, newCurrentPiece;
+			let canFall = canPieceFall(state.gameGrid, state.currentPiece);
+
+			newCurrentPiece = canFall ? state.currentPiece.fall() : state.currentPiece;
+			newGrid = composeGrid(state.gameGrid, newCurrentPiece);
+
 			return Object.assign({}, state, {
-				currentPiece: currentPiece,
-				gameGrid: validGrid
+				currentPiece: canFall ? newCurrentPiece : null,
+				gameGrid: newGrid
 			});
 		case ActionTypes.ROTATE_PIECE:
 			if (!state.currentPiece) return state;
@@ -91,4 +91,44 @@ function composeGrid(grid, piece) {
 
 	// determine if grid is valid, if not return null
 	return nextGrid;
+}
+
+function copyGrid(grid) {
+	let newGrid = [];
+
+	grid.forEach(row => {
+		let newRow = [];
+		newGrid.push(newRow);
+
+		row.forEach(col => newRow.push(col));
+	});
+
+	return newGrid;
+}
+
+function canPieceFall(grid, preFallPiece) {
+	let nextGrid = copyGrid(grid);
+	let fallenVersionOfPiece = preFallPiece.fall();
+	let valid = true;
+
+	fallenVersionOfPiece.body().forEach(fallingPart => {
+		if (fallingPart.row >= 20) {
+			valid = false;
+			return false;
+		}
+
+		let isOurOwnSpace = preFallPiece.body().some(otherPart => otherPart.row == fallingPart.row && otherPart.col == fallingPart.col);
+		if (isOurOwnSpace) {
+			valid = true;
+			return false;
+		}
+
+		let isOccupiedSpace = nextGrid[fallingPart.row][fallingPart.col] !== GameConfig.DEFAULT_GRID_SPACE
+		if (isOccupiedSpace) {
+			valid = false;
+			return false;
+		}
+	});
+
+	return valid;
 }

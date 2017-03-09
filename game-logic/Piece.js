@@ -8,7 +8,7 @@ module.exports = {
 
 function create(options) {
     let config = Object.assign({}, {
-        row: 5,
+        row: options.type === 'I' ? 1 : 0,
         col: 5,
         rotation: 0,
         type: 'J'
@@ -19,7 +19,7 @@ function create(options) {
 
     return {
         origin() { return { row: config.row, col: config.col }; },
-        color() { return BlockColors.LIGHTGRAY },
+        type() { return config.type; },
         body() { return shape.parts(); },
         fall() {
             return create({
@@ -30,7 +30,7 @@ function create(options) {
         rotate() {
             return create({
                 ...config,
-                rotation: config.rotation + 90
+                rotation: config.rotation + (config.type == 'O' ? 0 : 90)
             });
         },
         setPosition(y, x) {

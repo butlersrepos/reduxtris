@@ -3,29 +3,45 @@ let Piece = require('./Piece');
 let currentBag = [];
 
 module.exports = {
-    generateNewBag,
-    random() {
-        if (currentBag.length === 0) {
-            currentBag = generateNewBag(Piece.Types);
-        }
+	generateNewBag,
+	generateBaggedSet,
+	random() {
+		if (currentBag.length === 0) {
+			currentBag = generateNewBag(Piece.Types);
+		}
 
-        let randIndex = Math.floor(Math.random() * currentBag);
-        let type = currentBag.splice(randIndex, 1)[0];
+		let randIndex = Math.floor(Math.random() * currentBag);
+		let type = currentBag.splice(randIndex, 1)[0];
 
-        return Piece.create({type: type});
-    },
+		return Piece.create({ type: type });
+	},
 }
 
 function generateNewBag(sourceSet) {
-    let allPieces = sourceSet.slice(0);
-    let bag = [];
+	let allPieces = sourceSet.slice(0);
+	let bag = [];
 
-    while (allPieces.length > 0) {
-        let randIndex = Math.floor(Math.random() * allPieces.length);
-        let nextPiece = allPieces.splice(randIndex, 1)[0];
+	while (allPieces.length > 0) {
+		let randIndex = Math.floor(Math.random() * allPieces.length);
+		let nextPiece = allPieces.splice(randIndex, 1)[0];
 
-        bag.push(nextPiece);
-    }
+		bag.push(nextPiece);
+	}
 
-    return bag;
+	return bag;
+}
+
+function generateBaggedSet(sourceSet, total) {
+	let entryList = [];
+
+	while (entryList.length < total) {
+		let thisBag = generateNewBag(sourceSet);
+		entryList = entryList.concat(thisBag);
+	}
+
+	let index = 0;
+
+	return {
+		next() { return entryList[index++ % total]; }
+	};
 }

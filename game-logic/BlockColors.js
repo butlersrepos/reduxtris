@@ -6,5 +6,5 @@ module.exports = {
     NAVYBLUE: 'NAVYBLUE',
     DARKGREEN: 'DARKGREEN',
     BROWN: 'BROWN',
-    TEAL: 'TEAL'
+    TEAL: 'TEAL',
 }

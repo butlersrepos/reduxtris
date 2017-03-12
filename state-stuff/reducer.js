@@ -5,6 +5,7 @@ let PieceBag = require('../game-logic/PieceBag');
 let CLEAR = require('../game-logic/BlockColors').CLEAR;
 let GameGrid = require('../game-logic/GameGrid');
 let MoveReducers = require('./reducers/move-reducers');
+let GameLoop = require('../game-logic/GameLoop');
 
 let starterBag = PieceBag.generateBaggedSet(Piece.Types, 2000);
 
@@ -40,27 +41,7 @@ module.exports = function (state = initialState, action) {
 				gameGrid: GameGrid.addPiece(state.gameGrid, piece)
 			});
 		case ActionTypes.TICK_GAME:
-			if (!state.currentPiece || state.gameState !== GameStates.PLAYING) {
-				return state;
-			}
-
-			let newGrid, newCurrentPiece, newNextPiece = state.nextPiece;
-			let canFall = GameGrid.canPieceFall(state.gameGrid, state.currentPiece);
-
-			if (canFall) {
-				newCurrentPiece = state.currentPiece.fall();
-				newGrid = GameGrid.updatePiece(state.gameGrid, state.currentPiece, newCurrentPiece);
-			} else {
-				newCurrentPiece = state.nextPiece;
-				newGrid = GameGrid.addPiece(state.gameGrid, newCurrentPiece);
-				newNextPiece = Piece.create({ type: state.bag.next() });
-			}
-
-			return Object.assign({}, state, {
-				currentPiece: newCurrentPiece,
-				nextPiece: newNextPiece,
-				gameGrid: newGrid
-			});
+			return GameLoop.update(state, action);
 		case ActionTypes.SET_TICK_TIME:
 			return Object.assign({}, state, {
 				tickTimer: action.value

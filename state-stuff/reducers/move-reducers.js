@@ -24,6 +24,8 @@ function drop(state, action) {
         canFall = GameGrid.canPieceFit(nextGrid, originalPiece, proposedPiece)
     }
 
+    nextGrid = GameGrid.scoreLines(nextGrid);
+    
     return Object.assign({}, state, {
         gameGrid: nextGrid,
         currentPiece: state.nextPiece,

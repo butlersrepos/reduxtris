@@ -6,13 +6,40 @@ module.exports = {
 	canPieceFit,
 	generateBaseGrid,
 	addPiece,
-	updatePiece
+	updatePiece,
+	scoreLines
 };
+
+function newEmptyRow() {
+	let row = [];
+	for (let x = 0; x < GameConfig.GRID_COLUMNS; x++) {
+		row.push(GameConfig.DEFAULT_GRID_SPACE);
+	}
+	return row;
+}
+
+function scoreLines(grid) {
+	console.log('scoring lines');
+	let nextGrid = copyGrid(grid);
+
+	nextGrid = nextGrid.filter(row => {
+		return row.some(val => val === GameConfig.DEFAULT_GRID_SPACE)
+	});
+
+	let scoredLines = GameConfig.GRID_ROWS - nextGrid.length;
+	console.log('scored ' + scoredLines + ' lines total');
+
+	while (nextGrid.length < GameConfig.GRID_ROWS) {
+		nextGrid.unshift(newEmptyRow());
+	}
+
+	return nextGrid;
+}
 
 function updatePiece(grid, oldPiece, newPiece) {
 	let nextGrid = copyGrid(grid);
 
-	oldPiece.body().map(part => nextGrid[part.row][part.col] = 'X');
+	oldPiece.body().map(part => nextGrid[part.row][part.col] = GameConfig.DEFAULT_GRID_SPACE);
 	newPiece.body().map(part => nextGrid[part.row][part.col] = newPiece.type());
 
 	return nextGrid;

@@ -84,7 +84,7 @@ module.exports = {
 			Part(0, -1),
 			Part(row, col, true),
 			Part(0, 1),
-			Part(1, 1)
+			Part(1, 0)
 		]);
 	},
 	S(row, col) {

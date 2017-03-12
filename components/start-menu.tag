@@ -1,5 +1,6 @@
 let Actions = require('../state-stuff/Actions');
 let PieceBag = require('../game-logic/PieceBag');
+let GameStates = require('../game-logic/GameStates');
 
 <start-menu onclick={ start }>
     <h1>WAN 2 PLAE?!</h1>
@@ -12,7 +13,9 @@ let PieceBag = require('../game-logic/PieceBag');
 
         tickIt() {
             setTimeout(() => {
-                Store.dispatch(Actions.tickGame())
+                if( Store.getState().gameState == GameStates.PLAYING ) {
+                    Store.dispatch(Actions.tickGame())
+                }
                 this.tickIt()
             }, Store.getState().tickTimer);
         }

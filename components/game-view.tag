@@ -10,7 +10,6 @@ let Actions = require('../state-stuff/Actions');
     <script>
         extractState() {
             this.gameGrid = Store.getState().gameGrid
-            this.gamePiece = Store.getState().currentPiece
         }
 
         this.extractState()

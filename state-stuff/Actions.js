@@ -23,5 +23,14 @@ module.exports = {
 	},
 	unpauseGame() {
 		return { type: ActionTypes.UNPAUSE_GAME };
+	},
+	movePieceRight() {
+		return { type: ActionTypes.MOVE_RIGHT };
+	},
+	movePieceLeft() {
+		return { type: ActionTypes.MOVE_LEFT };
+	},
+	dropPiece() {
+		return { type: ActionTypes.DROP_PIECE };
 	}
 };

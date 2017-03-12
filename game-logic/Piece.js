@@ -33,22 +33,27 @@ function create(options) {
                 rotation: config.rotation + (config.type == 'O' ? 0 : 90)
             });
         },
-        setPosition(y, x) {
+        left() {
             return create({
                 ...config,
-                row: y,
-                col: x
+                col: config.col - 1
             });
         },
+        right() {
+            return create({
+                ...config,
+                col: config.col + 1
+            })
+        }
     };
 }
 
 function generateShape(row, col, rotation, type) {
     let shape = PieceLayouts[type](row, col);
-	while( rotation > 0 ) {
-		shape.rotate();
-		rotation -= 90;
-	}
-	return shape;
+    while (rotation > 0) {
+        shape.rotate();
+        rotation -= 90;
+    }
+    return shape;
 }
 

@@ -19,21 +19,14 @@ let Actions = require('../state-stuff/Actions');
 
         this.extractState();
         Store.subscribe(() => this.extractState())
-		document.addEventListener('keyup', event => {
-			switch(event.key) {
-				case 'p':
-					let action = this.isPaused ? Actions.unpauseGame() : Actions.pauseGame()
-					Store.dispatch(action);
-					break;
-				default:
-			}
-		})
     </script>
     
     <style scoped=scoped>
         :scope {
-            font-family: Sentinel, Arial, sans-serif;
+            font-family: Consolas, monospace, sans-serif;
             display: flex;
+            background: #111;
+            color: #fff;
             width: 640px;
             height: 480px;
             border: 3px solid black;

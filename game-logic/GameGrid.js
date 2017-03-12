@@ -4,8 +4,29 @@ module.exports = {
 	canPieceFall,
 	canPieceRotate,
 	canPieceFit,
-	generateBaseGrid
+	generateBaseGrid,
+	addPiece,
+	updatePiece
 };
+
+function updatePiece(grid, oldPiece, newPiece) {
+	let nextGrid = copyGrid(grid);
+
+	oldPiece.body().map(part => nextGrid[part.row][part.col] = 'X');
+	newPiece.body().map(part => nextGrid[part.row][part.col] = newPiece.type());
+
+	return nextGrid;
+}
+
+function addPiece(grid, piece) {
+	let nextGrid = copyGrid(grid);
+
+	piece.body().forEach(part => {
+		nextGrid[part.row][part.col] = piece.type();
+	});
+
+	return nextGrid;
+}
 
 function generateBaseGrid(options) {
 	let config = Object.assign({}, GameConfig, options);
@@ -26,12 +47,7 @@ function generateBaseGrid(options) {
 function copyGrid(grid) {
 	let newGrid = [];
 
-	grid.forEach(row => {
-		let newRow = [];
-		newGrid.push(newRow);
-
-		row.forEach(col => newRow.push(col));
-	});
+	grid.forEach(row => newGrid.push(row.slice(0)));
 
 	return newGrid;
 }

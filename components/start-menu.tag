@@ -7,7 +7,6 @@ let PieceBag = require('../game-logic/PieceBag');
     <script>
         this.start = () => {
             Store.dispatch(Actions.startGame())
-            Store.dispatch(Actions.setCurrentPiece(PieceBag.random()))
             this.tickIt();
         }
 

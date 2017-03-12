@@ -4,6 +4,9 @@ let Piece = require('../game-logic/Piece');
 let PieceBag = require('../game-logic/PieceBag');
 let CLEAR = require('../game-logic/BlockColors').CLEAR;
 let GameGrid = require('../game-logic/GameGrid');
+let MoveReducers = require('./reducers/move-reducers');
+
+let starterBag = PieceBag.generateBaggedSet(Piece.Types, 2000);
 
 let initialState = {
 	score: 0,
@@ -12,63 +15,51 @@ let initialState = {
 	nextPiece: null,
 	gameState: GameStates.BEFORE_START,
 	gameGrid: GameGrid.generateBaseGrid(),
-	tickTimer: 1000
+	tickTimer: 1000,
+	bag: starterBag
 };
 
-let bag = PieceBag.generateBaggedSet(Piece.Types, 2000);
 
 module.exports = function (state = initialState, action) {
 	switch (action.type) {
 		case ActionTypes.START_GAME:
-			let startPiece = Piece.create({ type: bag.next() });
-			let nextPiece = Piece.create({ type: bag.next() });
+			let startPiece = Piece.create({ type: state.bag.next() });
+			let nextPiece = Piece.create({ type: state.bag.next() });
 
 			return Object.assign({}, state, {
 				gameState: GameStates.PLAYING,
 				currentPiece: startPiece,
 				nextPiece,
-				gameGrid: composeGrid(state.gameGrid, startPiece)
+				gameGrid: GameGrid.addPiece(state.gameGrid, startPiece)
 			});
 		case ActionTypes.SET_CURRENT_PIECE:
 			let piece = action.value;
 
 			return Object.assign({}, state, {
 				currentPiece: piece,
-				gameGrid: composeGrid(state.gameGrid, piece)
+				gameGrid: GameGrid.addPiece(state.gameGrid, piece)
 			});
 		case ActionTypes.TICK_GAME:
-			if (!state.currentPiece || state.gameState == GameStates.PAUSED) {
+			if (!state.currentPiece || state.gameState !== GameStates.PLAYING) {
 				return state;
 			}
 
-			let newGrid, newCurrentPiece, newNextPiece;
+			let newGrid, newCurrentPiece, newNextPiece = state.nextPiece;
 			let canFall = GameGrid.canPieceFall(state.gameGrid, state.currentPiece);
 
 			if (canFall) {
 				newCurrentPiece = state.currentPiece.fall();
-				newGrid = composeGrid(state.gameGrid, newCurrentPiece);
-				newNextPiece = state.nextPiece;
+				newGrid = GameGrid.updatePiece(state.gameGrid, state.currentPiece, newCurrentPiece);
 			} else {
-				newGrid = composeGrid(state.gameGrid, state.currentPiece);
 				newCurrentPiece = state.nextPiece;
-				newGrid = composeGrid(newGrid, newCurrentPiece);
-				newNextPiece = Piece.create({ type: bag.next() });
+				newGrid = GameGrid.addPiece(state.gameGrid, newCurrentPiece);
+				newNextPiece = Piece.create({ type: state.bag.next() });
 			}
 
 			return Object.assign({}, state, {
 				currentPiece: newCurrentPiece,
 				nextPiece: newNextPiece,
 				gameGrid: newGrid
-			});
-		case ActionTypes.ROTATE_PIECE:
-			if (!state.currentPiece) { return state; }
-
-			let canRotate = GameGrid.canPieceRotate(state.gameGrid, state.currentPiece);
-			let resultingRotatedPiece = canRotate ? state.currentPiece.rotate() : state.currentPiece;
-
-			return Object.assign({}, state, {
-				currentPiece: resultingRotatedPiece,
-				gameGrid: composeGrid(state.gameGrid, resultingRotatedPiece)
 			});
 		case ActionTypes.SET_TICK_TIME:
 			return Object.assign({}, state, {
@@ -82,22 +73,15 @@ module.exports = function (state = initialState, action) {
 			return Object.assign({}, state, {
 				gameState: GameStates.PLAYING
 			});
+		case ActionTypes.DROP_PIECE:
+			return MoveReducers.drop(state, action);
+		case ActionTypes.ROTATE_PIECE:
+			return MoveReducers.rotate(state, action);
+		case ActionTypes.MOVE_LEFT:
+			return MoveReducers.moveLeft(state, action);
+		case ActionTypes.MOVE_RIGHT:
+			return MoveReducers.moveRight(state, action);
 		default:
 			return state;
 	}
 };
-
-function composeGrid(grid, piece) {
-	let nextGrid = GameGrid.generateBaseGrid();
-
-	piece.body().forEach(part => {
-		if (part.row >= 20) debugger;
-		if (part.col >= 10) debugger;
-		nextGrid[part.row][part.col] = piece.type();
-	});
-
-	return nextGrid;
-}
-
-
-

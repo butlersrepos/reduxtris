@@ -140,14 +140,10 @@ let initialState = {
 	message: ''
 };
 
-module.exports = function (state, action) {
-	let mergedState = Object.assign({}, initialState, state);
-	let nextState = JSON.parse(JSON.stringify(mergedState));
-
+module.exports = function (state = initialState, action) {
 	switch (action.type) {
 		case 'SET_MESSAGE':
-			nextState.message = action.value;
-			break;
+			return Object.assign({}, state, { message: action.value });
 		default:
 			return state;
 	}
@@ -199,7 +195,8 @@ But after all that, which took me a handful of minutes to correct, we're ready t
 	"dev": "webpack -w"
 }
 ```
-- Next we need to add the riottag-loader so we can start making components, this step required me to google up the config was `webpack` although I did do `npm home riot-tag-loader` instead of traveling through the Great Gooj
+- Next we need to add the riottag-loader so we can start making components, this step required me to google up the config for `webpack` although I did do `npm home riot-tag-loader` instead of traveling through the [Great Gooj](www.google.com)
+
 ## Our new-improved wepback config
 ```js
 module.exports = {

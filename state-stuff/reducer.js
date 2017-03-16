@@ -2,7 +2,6 @@ let GameStates = require('../game-logic/GameStates');
 let ActionTypes = require('./ActionTypes');
 let Piece = require('../game-logic/Piece');
 let PieceBag = require('../game-logic/PieceBag');
-let CLEAR = require('../game-logic/BlockColors').CLEAR;
 let GameGrid = require('../game-logic/GameGrid');
 let MoveReducers = require('./reducers/move-reducers');
 let GameLoop = require('../game-logic/GameLoop');
@@ -19,7 +18,6 @@ let initialState = {
 	tickTimer: 1000,
 	bag: starterBag
 };
-
 
 module.exports = function (state = initialState, action) {
 	switch (action.type) {

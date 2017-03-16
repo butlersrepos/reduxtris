@@ -16,20 +16,26 @@ function update(state, action) {
     let newNextPiece = state.nextPiece;
     let canFall = GameGrid.canPieceFall(state.gameGrid, state.currentPiece);
 
-
     if (canFall) {
         newCurrentPiece = state.currentPiece.fall();
-        newGrid = GameGrid.updatePiece(newGrid, state.currentPiece, newCurrentPiece);
+
+        return Object.assign({}, state, {
+            currentPiece: newCurrentPiece,
+            gameGrid: GameGrid.updatePiece(newGrid, state.currentPiece, newCurrentPiece)
+        });
     } else {
         newGrid = GameGrid.scoreLines(newGrid);
         newCurrentPiece = state.nextPiece;
         newGrid = GameGrid.addPiece(newGrid, newCurrentPiece);
         newNextPiece = Piece.create({ type: state.bag.next() });
-    }
 
-    return Object.assign({}, state, {
-        currentPiece: newCurrentPiece,
-        nextPiece: newNextPiece,
-        gameGrid: newGrid
-    });
+        let lostGame = GameGrid.didWeLose(newGrid, newCurrentPiece);
+
+        return Object.assign({}, state, {
+            currentPiece: newCurrentPiece,
+            nextPiece: newNextPiece,
+            gameGrid: newGrid,
+            gameState: lostGame ? GameStates.GAME_OVER : state.gameState
+        });
+    }
 }

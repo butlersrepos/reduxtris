@@ -7,12 +7,14 @@ let Actions = require('../state-stuff/Actions');
     <stats-panel class="{ notPlaying ? 'dimmed' : ''}"></stats-panel>
     <start-menu if={ beforeStart }></start-menu>
 	<pause-menu if={ isPaused }></pause-menu>
+    <game-over-menu if= { gameOver }></game-over-menu>
 
     <script>
         extractState() {
             this.beforeStart = Store.getState().gameState == GameStates.BEFORE_START
-            this.notPlaying = this.beforeStart || this.isPaused || this.gameOver
 			this.isPaused = Store.getState().gameState == GameStates.PAUSED
+            this.gameOver = Store.getState().gameState == GameStates.GAME_OVER
+            this.notPlaying = this.beforeStart || this.isPaused || this.gameOver
 
             this.update()
         }

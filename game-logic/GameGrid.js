@@ -7,8 +7,14 @@ module.exports = {
 	generateBaseGrid,
 	addPiece,
 	updatePiece,
-	scoreLines
+	scoreLines,
+	didWeLose
 };
+
+
+function didWeLose(grid, incomingPiece) {
+	return incomingPiece.body().some(part => grid[part.row][part.col] !== GameConfig.DEFAULT_GRID_SPACE);
+}
 
 function newEmptyRow() {
 	let row = [];

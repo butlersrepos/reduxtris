@@ -11,6 +11,7 @@ import './components/player-panel.tag';
 import './components/game-view.tag';
 import './components/grid-block.tag';
 import './components/pause-menu.tag';
+import './components/game-over-menu.tag';
 
 window.Store = createStore(reducerUltimus, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 

@@ -26,10 +26,11 @@ function update(state, action) {
     } else {
         newGrid = GameGrid.scoreLines(newGrid);
         newCurrentPiece = state.nextPiece;
+        
+        let lostGame = GameGrid.didWeLose(newGrid, newCurrentPiece);
+        
         newGrid = GameGrid.addPiece(newGrid, newCurrentPiece);
         newNextPiece = Piece.create({ type: state.bag.next() });
-
-        let lostGame = GameGrid.didWeLose(newGrid, newCurrentPiece);
 
         return Object.assign({}, state, {
             currentPiece: newCurrentPiece,

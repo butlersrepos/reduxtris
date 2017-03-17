@@ -27,6 +27,11 @@ let Actions = require('../state-stuff/Actions');
             .game-row {
                 display: flex;
             }
+
+            grid-block {
+                height: 24px;
+                width: 24px;
+            }
         }
     </style>
 </game-view>

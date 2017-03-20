@@ -25,6 +25,7 @@ let Actions = require('../state-stuff/Actions');
     
     <style scoped=scoped>
         :scope {
+            user-select: none;
             font-family: Consolas, monospace, sans-serif;
             display: flex;
             background: #111;
@@ -51,9 +52,24 @@ let Actions = require('../state-stuff/Actions');
             stats-panel {
                 transition: filter 1s ease-out;
             }
+        }
 
-            .dimmed {
-                filter: blur(5px);
+        .dimmed {
+            filter: blur(5px);
+        }
+
+        button {
+            border: 0;
+            zoom: 2;
+            border-radius: 5px;
+            box-shadow: 5px 5px 10px darken(#0074D9, 25%);
+            background: #0074D9;
+            font-weight: bold;
+            padding: 10px;
+            color: #fff;
+
+            &.active {
+                box-shadow: inset 5px 5px 10px darken(#0074D9, 25%);
             }
         }
     </style>

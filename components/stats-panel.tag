@@ -1,7 +1,6 @@
 <stats-panel>
-    <div>Pieces stats</div>
+    <h1>Next:</h1>
     <div class="piece-diagram">
-        { displayPiece.type() }
         <div class="piece-display-row" each={ row, y in [0,1,2,3,4] }>
             <virtual each={ col, x in [0,1,2,3,4] }>
                 <grid-block block-type="{ isOccupied(row, col) ? displayPiece.type() : defaultPiece.type() }"></grid-block>

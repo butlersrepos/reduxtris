@@ -34,10 +34,6 @@ function drop(state, action) {
 }
 
 function move(state, originalPiece, proposedPiece) {
-    if (!state.currentPiece || state.gameState !== GameStates.PLAYING) {
-        return state;
-    }
-
     let nextGrid;
     let canMove = GameGrid.canPieceFit(state.gameGrid, originalPiece, proposedPiece);
 

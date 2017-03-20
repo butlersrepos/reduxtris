@@ -1,20 +1,31 @@
-<pause-menu>
-	<h1>PAUSED</h1>
+let Actions = require('../state-stuff/Actions');
 
+<pause-menu>
+	<button onclick={ unpause }>PAUSED</button>
+
+	<script>
+		unpause() {
+			Store.dispatch(Actions.unpauseGame())
+		}
+	</script>
+	
 	<style scoped=scoped>
 		:scope {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			background: red;
 			position: absolute;
 			color: white;
-			width: 200px;
-			height: 100px;
-			border: 5px solid black;
-			top: 200px;
-			left: 300px;
-			border-radius: 5px;
+			width: 640px;
+			height: 480px;
+
+			button {
+				background: #FF4136;
+
+				&.active {
+                    box-shadow: inset 5px 5px 10px darken(#FF4136, 25%);
+                }
+			}
 		}
 	</style>
 </pause-menu>

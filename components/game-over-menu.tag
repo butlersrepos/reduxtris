@@ -1,14 +1,31 @@
 let GameStates = require('../game-logic/GameStates');
+let Actions = require('../state-stuff/Actions');
 
 <game-over-menu>
     <h1>
         <span class="you">YOU</span> <span class="lose">LOSE!</span>
     </h1>
+    <button class={ visible: show } onclick={ restart }>Play Again?</button>
 
     <script>
+        this.show = false
+
+        restart() {
+            Store.dispatch(Actions.startGame())
+        }
+
         playSounds() {
-            setTimeout(this.playYou, 250)
-            setTimeout(this.playLose, 1250)
+            setTimeout(() => {
+                this.playYou()
+                setTimeout(() => {
+                    this.playLose()
+
+                    setTimeout(() => {
+                        this.show = true
+                        this.update()
+                    }, 1000)
+                }, 1000)
+            }, 250)
         }
 
         playYou () { document.getElementById('you-sound').play() }
@@ -23,6 +40,7 @@ let GameStates = require('../game-logic/GameStates');
             width: 640px;
             height: 480px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
 
@@ -34,6 +52,19 @@ let GameStates = require('../game-logic/GameStates');
             
             .lose {
                 animation-delay: 1s;
+            }
+
+            button {
+                background: #2ECC40;
+                visibility: hidden;
+
+                &.visible {
+                    visibility: visible;
+                }
+
+                &.active {
+                    box-shadow: inset 5px 5px 10px darken(#2ECC40, 25%);
+                }
             }
         }
 

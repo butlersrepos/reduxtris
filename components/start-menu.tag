@@ -3,7 +3,7 @@ let PieceBag = require('../game-logic/PieceBag');
 let GameStates = require('../game-logic/GameStates');
 
 <start-menu onclick={ start }>
-    <h1>WAN 2 PLAE?!</h1>
+    <button>WAN 2 PLAE?!</button>
 
     <script>
         this.start = () => {
@@ -23,9 +23,6 @@ let GameStates = require('../game-logic/GameStates');
     
     <style scoped=scoped>
         :scope {
-            background: #0074D9;
-            border-radius: 10px;
-            box-shadow: 5px 5px 10px darken(#0074D9, 25%);
             position: absolute;
             width: 320px;
             height: 240px;
@@ -34,10 +31,6 @@ let GameStates = require('../game-logic/GameStates');
             display: flex;
             justify-content: center;
             align-items: center;
-
-            &:active {
-                box-shadow: inset 5px 5px 10px darken(#0074D9, 25%);
-            }
         }
     </style>
 </start-menu>

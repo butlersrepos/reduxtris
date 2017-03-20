@@ -24,12 +24,16 @@ module.exports = function (state = initialState, action) {
 		case ActionTypes.START_GAME:
 			let startPiece = Piece.create({ type: state.bag.next() });
 			let nextPiece = Piece.create({ type: state.bag.next() });
+			let newGrid = GameGrid.generateBaseGrid();
 
 			return Object.assign({}, state, {
 				gameState: GameStates.PLAYING,
 				currentPiece: startPiece,
 				nextPiece,
-				gameGrid: GameGrid.addPiece(state.gameGrid, startPiece)
+				gameGrid: GameGrid.addPiece(newGrid, startPiece),
+				score: 0,
+				level: 0,
+				tickTimer: 1000
 			});
 		case ActionTypes.SET_CURRENT_PIECE:
 			let piece = action.value;
@@ -39,26 +43,43 @@ module.exports = function (state = initialState, action) {
 				gameGrid: GameGrid.addPiece(state.gameGrid, piece)
 			});
 		case ActionTypes.TICK_GAME:
+			if (!state.currentPiece || state.gameState !== GameStates.PLAYING) {
+				return state;
+			}
 			return GameLoop.update(state, action);
 		case ActionTypes.SET_TICK_TIME:
 			return Object.assign({}, state, {
 				tickTimer: action.value
 			});
 		case ActionTypes.PAUSE_GAME:
+			if (state.gameState !== GameStates.PLAYING) return state;
 			return Object.assign({}, state, {
 				gameState: GameStates.PAUSED
 			});
 		case ActionTypes.UNPAUSE_GAME:
+			if (state.gameState !== GameStates.PAUSED) return state;
 			return Object.assign({}, state, {
 				gameState: GameStates.PLAYING
 			});
 		case ActionTypes.DROP_PIECE:
+			if (!state.currentPiece || state.gameState !== GameStates.PLAYING) {
+				return state;
+			}
 			return MoveReducers.drop(state, action);
 		case ActionTypes.ROTATE_PIECE:
+			if (!state.currentPiece || state.gameState !== GameStates.PLAYING) {
+				return state;
+			}
 			return MoveReducers.rotate(state, action);
 		case ActionTypes.MOVE_LEFT:
+			if (!state.currentPiece || state.gameState !== GameStates.PLAYING) {
+				return state;
+			}
 			return MoveReducers.moveLeft(state, action);
 		case ActionTypes.MOVE_RIGHT:
+			if (!state.currentPiece || state.gameState !== GameStates.PLAYING) {
+				return state;
+			}
 			return MoveReducers.moveRight(state, action);
 		default:
 			return state;

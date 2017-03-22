@@ -5,33 +5,36 @@ let Actions = require('../state-stuff/Actions');
     <h1>
         <span class="you">YOU</span> <span class="lose">LOSE!</span>
     </h1>
-    <button class={ visible: show } onclick={ restart }>Play Again?</button>
+    <button class={ visible: isShowingButton } onclick={ restart }>Play Again?</button>
+    <audio ref="yousound" src="./sounds/you.m4a"></audio>
+    <audio ref="losesound" src="./sounds/lose.m4a"></audio>
 
     <script>
-        this.show = false
+        this.isShowingButton = false
+
+        this.on('mount', () => {
+            this.refs.yousound.addEventListener('ended', () => this.playLose())
+            this.refs.losesound.addEventListener('ended', () => this.showButton())
+            this.playYou()
+        })
 
         restart() {
             Store.dispatch(Actions.startGame())
         }
+        
 
-        playSounds() {
-            setTimeout(() => {
-                this.playYou()
-                setTimeout(() => {
-                    this.playLose()
-
-                    setTimeout(() => {
-                        this.show = true
-                        this.update()
-                    }, 1000)
-                }, 1000)
-            }, 250)
+        playYou () { 
+            this.refs.yousound.play()
         }
 
-        playYou () { document.getElementById('you-sound').play() }
-        playLose () { document.getElementById('lose-sound').play() }
+        playLose () { 
+            setTimeout(() => this.refs.losesound.play(), 250) 
+        }
 
-        this.playSounds()
+        showButton() { 
+            this.isShowingButton = true
+            this.update()
+        }
     </script>
     
     <style scoped=scoped>

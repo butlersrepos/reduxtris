@@ -25,7 +25,6 @@ function newEmptyRow() {
 }
 
 function scoreLines(grid) {
-	console.log('scoring lines');
 	let nextGrid = copyGrid(grid);
 
 	nextGrid = nextGrid.filter(row => {
@@ -33,7 +32,6 @@ function scoreLines(grid) {
 	});
 
 	let scoredLines = GameConfig.GRID_ROWS - nextGrid.length;
-	console.log('scored ' + scoredLines + ' lines total');
 
 	while (nextGrid.length < GameConfig.GRID_ROWS) {
 		nextGrid.unshift(newEmptyRow());

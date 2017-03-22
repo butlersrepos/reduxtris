@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -24,5 +24,23 @@
     "riot-tag-loader": "^1.0.0",
     "style-loader": "~0.13.2",
     "webpack": "^2.2.1"
+  },
+  "devDependencies": {
+    "babel-jest": "~19.0.0",
+    "babel-preset-es2015": "~6.24.0",
+    "jest": "~19.0.2",
+    "riot-jest-transformer": "~1.0.10"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest",
+      "^.+\\.tag$": "riot-jest-transformer"
+    },
+    "timers": "fake"
   }
 }

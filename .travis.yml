@@ -1,3 +1,13 @@
 language: node_js
 node_js:
-  - "6"
+  - '6'
+script: npm run build
+deploy:
+  provider: s3
+  bucket: "reduxtris.ericbutler.info"
+  access_key_id: AKIAJWCP6LDZMFSNJK5A
+  skip_cleanup: true
+  region: us-east-2
+  local_dir: dist
+  secret_access_key:
+    secure: TibXJcODyF2x8Gb/hKwETIb90wxprVQXfWXGV8g+xq6ntTtcN8YTO3jCh92jW6AWxMa8yfipyNy79gfz3TzQs3FR9fx8tmBGVvCWP/6ZBFp2qIHmMFDT0SD9seK07I42zaO6R4AzB2nARWVjtzorVtuac/dnwL/5oz83ThDnr8n7b3GAkReevYWLw38xltvEAiZ8tCQfWcXPmwvF2JMzbjSqwOQWUlM1iA+vBfxC8L+I2WEqYPe/hcgyaHAp6MiKeYnWLl82ZTwl0ufKdTiVLHmXNX1wWxdrEoGKrPDcLiYlS1xBoZfJY3IywAkOsiqxhgysrtBC4s+w7QLIlM1/3L8H1dIBmAiUZsy3ZX4aV6/ZVBTPROB7g9W6JpxSmH5W6w9WwZQneaWRxB5BtZ7rNb1SJUUfGVFK2sCOrkpJne9jRwXmVZNOoIZPzZ0KsxqgeBk4aDMeHJNY7V6BwuKMjy/YozwY+SZrbq+MVBxGkVgLyHfmMKbKuayXgrXnuEZK3IOMz2MdWVY2XOVl8LHbbPUn/39KErFvETDhHmttt2SLlBs/ui/hmbXIqDnCOZagAcc3fisf9Hrjf5+3sTEJSWOBoM+rDpzx7lB3EL98w3oT7IRVwCTKSo3Es7T9RWkl3Xly295Sc3f9/nEtlKbulGmngJSBfZzlXW2vrkEq0As=

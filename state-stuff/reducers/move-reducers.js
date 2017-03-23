@@ -1,5 +1,6 @@
 let GameGrid = require('../../game-logic/GameGrid');
 let GameStates = require('../../game-logic/GameStates');
+let GameLoop = require('../../game-logic/GameLoop');
 let Piece = require('../../game-logic/Piece');
 
 module.exports = {
@@ -14,8 +15,11 @@ function drop(state, action) {
     let proposedPiece = state.currentPiece.fall();
 
     let canFall = GameGrid.canPieceFit(state.gameGrid, originalPiece, proposedPiece)
-    let nextGrid = state.gameGrid;
+    if (!canFall) {
+        return GameLoop.resolvePieceLanding(state, action);
+    }
 
+    let nextGrid = state.gameGrid;
     while (canFall) {
         nextGrid = GameGrid.updatePiece(nextGrid, originalPiece, proposedPiece);
 
@@ -25,7 +29,7 @@ function drop(state, action) {
     }
 
     nextGrid = GameGrid.scoreLines(nextGrid);
-    
+
     return Object.assign({}, state, {
         gameGrid: nextGrid,
         currentPiece: state.nextPiece,

@@ -23,7 +23,7 @@ describe('Game Over Menu', () => {
     });
 
     it('should show the button after some time', () => {
-        jest.runTimersToTime(5500);
+        jest.runTimersToTime(3000);
         expect($('game-over-menu button').classList).toContain('visible');
     });
 

@@ -14,15 +14,14 @@ let Actions = require('../state-stuff/Actions');
 
         this.on('mount', () => {
             this.refs.yousound.addEventListener('ended', () => this.playLose())
-            this.refs.losesound.addEventListener('ended', () => this.showButton())
             this.playYou()
+            setTimeout(this.showButton, 2000)
         })
 
         restart() {
             Store.dispatch(Actions.startGame())
         }
-        
-
+    
         playYou () { 
             this.refs.yousound.play()
         }

@@ -1,4 +1,4 @@
-let Actions = require('../state-stuff/Actions');
+let Actions = require('../state-stuff/actions');
 
 <game-view onclick={ rotate }>
     <div class="game-row" each={ row, y in this.gameGrid }>

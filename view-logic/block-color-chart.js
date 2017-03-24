@@ -1,4 +1,4 @@
-let BlockColors = require('../game-logic/BlockColors');
+let BlockColors = require('../game-logic/block-colors');
 
 module.exports = {
     X: 'rgba(0, 0, 0, 0.15)',

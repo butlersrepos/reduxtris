@@ -1,7 +1,7 @@
-let GameGrid = require('../../game-logic/GameGrid');
-let GameStates = require('../../game-logic/GameStates');
-let GameLoop = require('../../game-logic/GameLoop');
-let Piece = require('../../game-logic/Piece');
+let GameGrid = require('../../game-logic/game-grid');
+let GameStates = require('../../game-logic/game-states');
+let GameLoop = require('../../game-logic/game-loop');
+let Piece = require('../../game-logic/piece');
 
 module.exports = {
     moveLeft,

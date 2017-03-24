@@ -1,4 +1,4 @@
-let GameConfig = require('../game-logic/GameConfig');
+let GameConfig = require('../game-logic/game-config');
 
 module.exports = {
 	canPieceFall,
@@ -10,7 +10,6 @@ module.exports = {
 	scoreLines,
 	didWeLose
 };
-
 
 function didWeLose(grid, incomingPiece) {
 	return incomingPiece.body().some(part => grid[part.row][part.col] !== GameConfig.DEFAULT_GRID_SPACE);

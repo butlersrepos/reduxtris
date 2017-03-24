@@ -1,4 +1,4 @@
-let Piece = require('./Piece');
+let Piece = require('./piece');
 
 let currentBag = [];
 

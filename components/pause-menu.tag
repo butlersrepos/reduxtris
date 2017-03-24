@@ -1,4 +1,4 @@
-let Actions = require('../state-stuff/Actions');
+let Actions = require('../state-stuff/actions');
 
 <pause-menu>
 	<button onclick={ unpause }>PAUSED</button>

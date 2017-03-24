@@ -1,4 +1,4 @@
-let BlockColors = require('./BlockColors');
+let BlockColors = require('./block-colors');
 
 module.exports = {
     GRID_ROWS: 20,

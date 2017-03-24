@@ -1,4 +1,4 @@
-let BlockColorChart = require('../view-logic/BlockColorChart');
+let BlockColorChart = require('../view-logic/block-color-chart');
 
 <grid-block style="--blockColor: { color };">
     <script>

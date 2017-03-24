@@ -1,5 +1,5 @@
-let GameStates = require('../game-logic/GameStates');
-let Actions = require('../state-stuff/Actions');
+let GameStates = require('../game-logic/game-states');
+let Actions = require('../state-stuff/actions');
 
 <game-over-menu>
     <h1>

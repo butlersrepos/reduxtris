@@ -1,6 +1,6 @@
-let GameStates = require('../game-logic/GameStates');
-let GameGrid = require('../game-logic/GameGrid');
-let Piece = require('../game-logic/Piece');
+let GameStates = require('../game-logic/game-states');
+let GameGrid = require('../game-logic/game-grid');
+let Piece = require('../game-logic/piece');
 
 module.exports = {
     update,

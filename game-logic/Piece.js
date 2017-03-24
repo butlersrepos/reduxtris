@@ -1,5 +1,5 @@
-let BlockColors = require('./BlockColors');
-let PieceLayouts = require('./PieceLayouts');
+let BlockColors = require('./block-colors');
+let PieceLayouts = require('./piece-layout');
 
 module.exports = {
     create,

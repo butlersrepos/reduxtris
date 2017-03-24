@@ -1,4 +1,4 @@
-let ActionTypes = require('./ActionTypes');
+let ActionTypes = require('./action-types');
 
 module.exports = {
 	startGame() {

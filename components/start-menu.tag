@@ -1,6 +1,6 @@
-let Actions = require('../state-stuff/Actions');
-let PieceBag = require('../game-logic/PieceBag');
-let GameStates = require('../game-logic/GameStates');
+let Actions = require('../state-stuff/actions');
+let PieceBag = require('../game-logic/piece-bag');
+let GameStates = require('../game-logic/game-states');
 
 <start-menu onclick={ start }>
     <button>WAN 2 PLAE?!</button>

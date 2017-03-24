@@ -1,10 +1,10 @@
-let GameStates = require('../game-logic/GameStates');
-let ActionTypes = require('./ActionTypes');
-let Piece = require('../game-logic/Piece');
-let PieceBag = require('../game-logic/PieceBag');
-let GameGrid = require('../game-logic/GameGrid');
+let GameStates = require('../game-logic/game-states');
+let ActionTypes = require('./action-types');
+let Piece = require('../game-logic/piece');
+let PieceBag = require('../game-logic/piece-bag');
+let GameGrid = require('../game-logic/game-grid');
 let MoveReducers = require('./reducers/move-reducers');
-let GameLoop = require('../game-logic/GameLoop');
+let GameLoop = require('../game-logic/game-loop');
 
 let starterBag = PieceBag.generateBaggedSet(Piece.Types, 2000);
 

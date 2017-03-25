@@ -16,11 +16,7 @@ function didWeLose(grid, incomingPiece) {
 }
 
 function newEmptyRow() {
-	let row = [];
-	for (let x = 0; x < GameConfig.GRID_COLUMNS; x++) {
-		row.push(GameConfig.DEFAULT_GRID_SPACE);
-	}
-	return row;
+	return new Array(GameConfig.GRID_COLUMNS).fill(GameConfig.DEFAULT_GRID_SPACE);
 }
 
 function scoreLines(grid) {
@@ -49,13 +45,11 @@ function updatePiece(grid, oldPiece, newPiece) {
 }
 
 function addPiece(grid, piece) {
-	let nextGrid = copyGrid(grid);
+	let nonPiece = {
+		body: () => []
+	};
 
-	piece.body().forEach(part => {
-		nextGrid[part.row][part.col] = piece.type();
-	});
-
-	return nextGrid;
+	return updatePiece(grid, nonPiece, piece);
 }
 
 function generateBaseGrid(options) {

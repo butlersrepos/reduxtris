@@ -17,8 +17,8 @@ window.Store = createStore(reducerUltimus, window.__REDUX_DEVTOOLS_EXTENSION__ &
 
 riot.mount('*');
 
-import GameStates from './game-logic/GameStates';
-import Actions from './state-stuff/Actions';
+import GameStates from './game-logic/game-states';
+import Actions from './state-stuff/actions';
 
 document.addEventListener('keyup', event => {
     switch (event.key) {

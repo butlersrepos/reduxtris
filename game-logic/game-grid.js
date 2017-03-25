@@ -36,7 +36,7 @@ function scoreLines(grid) {
 		nextGrid.unshift(newEmptyRow());
 	}
 
-	return nextGrid;
+	return { scoredLines, nextGrid };
 }
 
 function updatePiece(grid, oldPiece, newPiece) {

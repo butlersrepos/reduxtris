@@ -10,31 +10,19 @@ module.exports = {
     drop
 };
 
-function drop(state, action) {
-    let originalPiece = state.currentPiece;
-    let proposedPiece = state.currentPiece.fall();
+function drop(state) {
+    let legallyPositionedPiece = state.currentPiece;
+    let proposedPositionPiece = state.currentPiece.fall();
 
-    let canFall = GameGrid.canPieceFit(state.gameGrid, originalPiece, proposedPiece)
-    if (!canFall) {
-        return GameLoop.resolvePieceLanding(state, action);
+    let canFall;
+    while (canFall = GameGrid.canPieceFit(state.gameGrid, legallyPositionedPiece, proposedPositionPiece)) {
+        legallyPositionedPiece = proposedPositionPiece;
+        proposedPositionPiece = proposedPositionPiece.fall();
     }
+    let nextGrid = GameGrid.updatePiece(state.gameGrid, state.currentPiece, legallyPositionedPiece);
 
-    let nextGrid = state.gameGrid;
-    while (canFall) {
-        nextGrid = GameGrid.updatePiece(nextGrid, originalPiece, proposedPiece);
-
-        originalPiece = proposedPiece;
-        proposedPiece = proposedPiece.fall();
-        canFall = GameGrid.canPieceFit(nextGrid, originalPiece, proposedPiece)
-    }
-
-    let { scoredLines, nextGrid: finalGrid } = GameGrid.scoreLines(nextGrid);
-
-    return Object.assign({}, state, {
-        gameGrid: finalGrid,
-        currentPiece: state.nextPiece,
-        nextPiece: Piece.create({ type: state.bag.next() })
-    });
+    let intermediateState = Object.assign({}, state, { gameGrid: nextGrid });
+    return GameLoop.resolvePieceLanding(intermediateState);
 }
 
 function move(state, originalPiece, proposedPiece) {
@@ -51,17 +39,17 @@ function move(state, originalPiece, proposedPiece) {
     });
 }
 
-function rotate(state, action) {
+function rotate(state) {
     let proposedPiece = state.currentPiece.rotate();
     return move(state, state.currentPiece, proposedPiece);
 }
 
-function moveLeft(state, action) {
+function moveLeft(state) {
     let proposedPiece = state.currentPiece.left();
     return move(state, state.currentPiece, proposedPiece);
 }
 
-function moveRight(state, action) {
+function moveRight(state) {
     let proposedPiece = state.currentPiece.right();
     return move(state, state.currentPiece, proposedPiece);
 }

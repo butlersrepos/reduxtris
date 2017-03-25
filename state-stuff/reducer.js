@@ -65,22 +65,22 @@ module.exports = function (state = initialState, action) {
 			if (!state.currentPiece || state.gameState !== GameStates.PLAYING) {
 				return state;
 			}
-			return MoveReducers.drop(state, action);
+			return MoveReducers.drop(state);
 		case ActionTypes.ROTATE_PIECE:
 			if (!state.currentPiece || state.gameState !== GameStates.PLAYING) {
 				return state;
 			}
-			return MoveReducers.rotate(state, action);
+			return MoveReducers.rotate(state);
 		case ActionTypes.MOVE_LEFT:
 			if (!state.currentPiece || state.gameState !== GameStates.PLAYING) {
 				return state;
 			}
-			return MoveReducers.moveLeft(state, action);
+			return MoveReducers.moveLeft(state);
 		case ActionTypes.MOVE_RIGHT:
 			if (!state.currentPiece || state.gameState !== GameStates.PLAYING) {
 				return state;
 			}
-			return MoveReducers.moveRight(state, action);
+			return MoveReducers.moveRight(state);
 		default:
 			return state;
 	}

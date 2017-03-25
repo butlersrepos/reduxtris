@@ -29,15 +29,14 @@ function update(state, action) {
     }
 }
 
-function resolvePieceLanding(state, action) {
-    let {scoredLines, nextGrid} = GameGrid.scoreLines(state.gameGrid);
-    let newCurrentPiece = state.nextPiece;
+function resolvePieceLanding(state) {
+    let { scoredLines, nextGrid } = GameGrid.scoreLines(state.gameGrid);
 
-    let lostGame = GameGrid.didWeLose(nextGrid, newCurrentPiece);
-    nextGrid = GameGrid.addPiece(nextGrid, newCurrentPiece);
+    let lostGame = GameGrid.didWeLose(nextGrid, state.nextPiece);
+    nextGrid = GameGrid.addPiece(nextGrid, state.nextPiece);
 
     return Object.assign({}, state, {
-        currentPiece: newCurrentPiece,
+        currentPiece: state.nextPiece,
         nextPiece: Piece.create({ type: state.bag.next() }),
         gameGrid: nextGrid,
         gameState: lostGame ? GameStates.GAME_OVER : state.gameState

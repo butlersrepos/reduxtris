@@ -25,12 +25,12 @@ function update(state, action) {
 
 function resolvePieceLanding(state) {
     let { scoredLines, nextGrid } = GameGrid.scoreLines(state.gameGrid);
-    let newScore = state.score + award(scoredLines);
     let lostGame = GameGrid.didWeLose(nextGrid, state.nextPiece);
     nextGrid = GameGrid.addPiece(nextGrid, state.nextPiece);
 
     return Object.assign({}, state, {
-        score: newScore,
+        score: state.score + award(scoredLines),
+        lines: state.lines + scoredLines,
         currentPiece: state.nextPiece,
         nextPiece: Piece.create({ type: state.bag.next() }),
         gameGrid: nextGrid,

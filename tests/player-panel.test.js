@@ -13,7 +13,7 @@ describe('Player Panel', () => {
 
     beforeAll(() => {
         mockState.mockReturnValue({
-            level: 5,
+            lines: 51,
             score: 800
         });
         let elem = create('player-panel');
@@ -33,7 +33,7 @@ describe('Player Panel', () => {
     describe('when the state changes', () => {
         beforeEach(() => {
             mockState.mockReturnValue({
-                level: 10,
+                lines: 109,
                 score: 1000
             });
 

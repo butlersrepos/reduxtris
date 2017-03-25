@@ -1,6 +1,7 @@
 let Actions = require('../state-stuff/actions');
 let PieceBag = require('../game-logic/piece-bag');
 let GameStates = require('../game-logic/game-states');
+import { tickInterval } from '../state-stuff/selectors';
 
 <start-menu onclick={ start }>
     <button>WAN 2 PLAE?!</button>
@@ -17,7 +18,7 @@ let GameStates = require('../game-logic/game-states');
                     Store.dispatch(Actions.tickGame())
                 }
                 this.tickIt()
-            }, Store.getState().tickTimer);
+            }, tickInterval(Store.getState()));
         }
     </script>
     

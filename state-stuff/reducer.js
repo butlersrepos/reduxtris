@@ -10,12 +10,11 @@ let starterBag = PieceBag.generateBaggedSet(Piece.Types, 2000);
 
 let initialState = {
 	score: 0,
-	level: 0,
+	lines: 0,
 	currentPiece: null,
 	nextPiece: null,
 	gameState: GameStates.BEFORE_START,
 	gameGrid: GameGrid.generateBaseGrid(),
-	tickTimer: 1000,
 	bag: starterBag
 };
 
@@ -32,8 +31,7 @@ module.exports = function (state = initialState, action) {
 				nextPiece,
 				gameGrid: GameGrid.addPiece(newGrid, startPiece),
 				score: 0,
-				level: 0,
-				tickTimer: 1000
+				level: 0
 			});
 		case ActionTypes.SET_CURRENT_PIECE:
 			let piece = action.value;
@@ -47,10 +45,6 @@ module.exports = function (state = initialState, action) {
 				return state;
 			}
 			return GameLoop.update(state, action);
-		case ActionTypes.SET_TICK_TIME:
-			return Object.assign({}, state, {
-				tickTimer: action.value
-			});
 		case ActionTypes.PAUSE_GAME:
 			if (state.gameState !== GameStates.PLAYING) return state;
 			return Object.assign({}, state, {

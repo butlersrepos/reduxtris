@@ -21,5 +21,16 @@ describe('Game Loop', () => {
             let nextState = subject.resolvePieceLanding(givenState);
             expect(nextState.score).toEqual(200);
         });
+
+        it('keeps track of the lines we score', () => {
+            let givenState = {
+                score: 100,
+                lines: 1,
+                bag: { next() { } }
+            };
+
+            let nextState = subject.resolvePieceLanding(givenState);
+            expect(nextState.lines).toEqual(2);
+        });
     });
 });

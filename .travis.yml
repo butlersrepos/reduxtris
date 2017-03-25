@@ -12,7 +12,6 @@ deploy:
   bucket: "reduxtris.ericbutler.info"
   # Amazon access key for my personal Amazon
   access_key_id: AKIAJWCP6LDZMFSNJK5A
-  skip_cleanup: true
   region: us-east-2
   # Folder that will be uploaded to S3
   local_dir: dist

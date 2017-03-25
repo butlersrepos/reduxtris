@@ -9,6 +9,32 @@ describe('Game Grid', () => {
         startingGrid = emptyGrid();
     });
 
+    describe('generating a base grid', () => {
+        it('applies defaults from GameConfig', () => {
+            let resultGrid = subject.generateBaseGrid();
+            expect(resultGrid.length).toBe(GameConfig.GRID_ROWS);
+
+            for (let row = 0; row < GameConfig.GRID_ROWS; row++) {
+                expect(resultGrid[row]).toEqual(emptyRow());
+            };
+        });
+
+        it('allows overriding defaults', () => {
+            let config = {
+                GRID_ROWS: 2,
+                GRID_COLUMNS: 3,
+                DEFAULT_GRID_SPACE: 'W'
+            };
+            let resultGrid = subject.generateBaseGrid(config);
+            expect(resultGrid.length).toBe(config.GRID_ROWS);
+
+            let expectedRow = new Array(config.GRID_COLUMNS).fill(config.DEFAULT_GRID_SPACE);
+            for (let row = 0; row < config.GRID_ROWS; row++) {
+                expect(resultGrid[row]).toEqual(expectedRow);
+            };
+        });
+    });
+
     describe('when scoring lines', () => {
         it('removes the scored lines and replaces them with empty ones', () => {
             startingGrid[3].fill('L');

@@ -1,15 +1,19 @@
-let GameStates = require('../game-logic/game-states');
-let Actions = require('../state-stuff/actions');
+import GameStates from '../game-logic/game-states';
+import Actions from '../state-stuff/actions';
+import youSoundFile from '../sounds/you.m4a';
+import loseSoundFile from '../sounds/lose.m4a';
 
 <game-over-menu>
     <h1>
         <span class="you">YOU</span> <span class="lose">LOSE!</span>
     </h1>
     <button class={ visible: isShowingButton } onclick={ restart }>Play Again?</button>
-    <audio ref="yousound" src="./sounds/you.m4a"></audio>
-    <audio ref="losesound" src="./sounds/lose.m4a"></audio>
+    <audio ref="yousound" src="##srcServer##{ youSrc }"></audio>
+    <audio ref="losesound" src="##srcServer##{ loseSrc }"></audio>
 
     <script>
+        this.youSrc = youSoundFile
+        this.loseSrc = loseSoundFile
         this.isShowingButton = false
 
         this.on('mount', () => {

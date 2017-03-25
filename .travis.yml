@@ -4,7 +4,7 @@ language: node_js
 node_js:
   - '6'
 # Customizable command to run after installing
-script: npm run build
+script: ENV=prod npm run build
 # Configuration to deploy to Amazon S3
 deploy:
   provider: s3

@@ -1,4 +1,12 @@
 let packageConfig = require('./package.json');
+let env = process.env.ENV || 'dev';
+
+let Urls = {
+	dev: './dist/',
+	prod: 'https://s3.us-east-2.amazonaws.com/reduxtris.ericbutler.info/'
+};
+
+let srcServer = Urls[env];
 
 module.exports = {
 	entry: './main.js',
@@ -8,6 +16,19 @@ module.exports = {
 	},
 	module: {
 		loaders: [
+			{
+				test: /\.tag$/,
+				exclude: /node_modules/,
+				loader: 'string-replace-loader',
+				query: {
+					search: /##srcServer##/g,
+					replace: srcServer
+				}
+			},
+			{
+				test: /\.(gif|jpg|png|mp3|aac|ogg|m4a)$/,
+				loader: 'file-loader'
+			},
 			{
 				test: /\.tag$/,
 				exclude: /node_modules/,
@@ -22,8 +43,8 @@ module.exports = {
 			},
 			{
 				test: /\.js$/,
-				loader: 'babel-loader',
 				exclude: /node_modules/,
+				loader: 'babel-loader',
 				query: {
 					presets: packageConfig.babel.presets,
 					plugins: packageConfig.babel.plugins

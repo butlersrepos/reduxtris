@@ -1,6 +1,7 @@
-let GameStates = require('../game-logic/game-states');
-let GameGrid = require('../game-logic/game-grid');
-let Piece = require('../game-logic/piece');
+import GameStates from './game-states';
+import GameGrid from './game-grid';
+import Piece from './piece';
+import award from './score-keeper';
 
 module.exports = {
     update,
@@ -12,30 +13,24 @@ function update(state, action) {
         return state;
     }
 
-    let newGrid = state.gameGrid;
-    let newCurrentPiece;
-    let newNextPiece = state.nextPiece;
-    let canFall = GameGrid.canPieceFall(state.gameGrid, state.currentPiece);
-
-    if (canFall) {
-        newCurrentPiece = state.currentPiece.fall();
-
+    if (GameGrid.canPieceFall(state.gameGrid, state.currentPiece)) {
         return Object.assign({}, state, {
-            currentPiece: newCurrentPiece,
-            gameGrid: GameGrid.updatePiece(newGrid, state.currentPiece, newCurrentPiece)
+            gameGrid: GameGrid.updatePiece(state.gameGrid, state.currentPiece, state.currentPiece.fall()),
+            currentPiece: state.currentPiece.fall()
         });
     } else {
-        return resolvePieceLanding(state, action);
+        return resolvePieceLanding(state);
     }
 }
 
 function resolvePieceLanding(state) {
     let { scoredLines, nextGrid } = GameGrid.scoreLines(state.gameGrid);
-
+    let newScore = state.score + award(scoredLines);
     let lostGame = GameGrid.didWeLose(nextGrid, state.nextPiece);
     nextGrid = GameGrid.addPiece(nextGrid, state.nextPiece);
 
     return Object.assign({}, state, {
+        score: newScore,
         currentPiece: state.nextPiece,
         nextPiece: Piece.create({ type: state.bag.next() }),
         gameGrid: nextGrid,

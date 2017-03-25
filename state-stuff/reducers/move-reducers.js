@@ -7,7 +7,8 @@ module.exports = {
     moveLeft,
     moveRight,
     rotate,
-    drop
+    drop,
+    move
 };
 
 function drop(state) {

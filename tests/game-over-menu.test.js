@@ -1,6 +1,6 @@
 import * as riot from 'riot';
 import { $, $$, create, triggerClick } from './test-utils';
-import gameOverMenu from '../components/game-over-menu.tag';
+import '../components/game-over-menu.tag';
 
 describe('Game Over Menu', () => {
     let mockDispatch = jest.fn();

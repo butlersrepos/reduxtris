@@ -1,3 +1,5 @@
+let packageConfig = require('./package.json');
+
 module.exports = {
 	entry: './main.js',
 	output: {
@@ -23,8 +25,8 @@ module.exports = {
 				loader: 'babel-loader',
 				exclude: /node_modules/,
 				query: {
-					presets: ['env'],
-					plugins: ["transform-object-rest-spread"]
+					presets: packageConfig.babel.presets,
+					plugins: packageConfig.babel.plugins
 				}
 			}
 		],

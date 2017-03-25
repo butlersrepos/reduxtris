@@ -22,5 +22,5 @@ export function emptyGrid() {
 }
 
 export function emptyRow() {
-    return new Array(10).fill(GameConfig.DEFAULT_GRID_SPACE);
+    return new Array(GameConfig.GRID_COLUMNS).fill(GameConfig.DEFAULT_GRID_SPACE);
 }

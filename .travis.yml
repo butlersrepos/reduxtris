@@ -8,6 +8,8 @@ script: npm run build
 # Configuration to deploy to Amazon S3
 deploy:
   provider: s3
+  # Needed so that travis doesn't blow away /dist'
+  skip_cleanup: true
   # The S3 bucket I created to house this project's artifacts
   bucket: "reduxtris.ericbutler.info"
   # Amazon access key for my personal Amazon

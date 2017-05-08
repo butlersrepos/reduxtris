@@ -1,7 +1,7 @@
 let GameStates = require('../game-logic/game-states');
 let Actions = require('../state-stuff/actions');
 
-<reduxtris>
+<riot-reduxtris>
     <player-panel class="{ notPlaying ? 'dimmed' : ''}"></player-panel>
     <game-view class="{ notPlaying ? 'dimmed' : ''}"></game-view>
     <stats-panel class="{ notPlaying ? 'dimmed' : ''}"></stats-panel>
@@ -73,4 +73,4 @@ let Actions = require('../state-stuff/actions');
             }
         }
     </style>
-</reduxtris>
+</riot-reduxtris>

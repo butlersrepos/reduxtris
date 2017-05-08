@@ -42,14 +42,22 @@ module.exports = {
 				use: ['style-loader', 'css-loader']
 			},
 			{
+				test: /\.jsx$/,
+				exclude: /node_modules/,
+				loader: 'babel-loader',
+				query: {
+					presets: ["es2015", "react"]
+				}
+			},
+			{
 				test: /\.js$/,
 				exclude: /node_modules/,
 				loader: 'babel-loader',
 				query: {
-					presets: packageConfig.babel.presets,
-					plugins: packageConfig.babel.plugins
+					presets: ["es2015"],
+					plugins: ["transform-object-rest-spread"]
 				}
-			}
+			},
 		],
 	}
 };
